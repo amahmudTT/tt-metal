@@ -30,6 +30,7 @@ from helpers.llk_params import (
     ReducePool,
     Tilize,
 )
+from helpers.sfpu_dispatch_constants import EXP_WITH_BASE_SCALE
 from helpers.sfpu_domains import (
     _BINARY_SPECIALS_NOT_READY,
     BINARY_SPECIALS_READY_OPS,
@@ -295,12 +296,16 @@ def test_dest_truncation_masks_match_the_mantissa_width_table():
 
 def test_exp_family_ceiling_follows_the_approximation_mode():
     """The registry holds the range bound; only ApproximationMode.Yes narrows to the
-    approximation's accuracy ceiling, exp_with_base's is double exp's in both modes, and
-    a narrow format's branch already under the ceiling is left alone."""
+    approximation's accuracy ceiling, exp_with_base's is exp's over its scale in both
+    modes, and a narrow format's branch already under the ceiling is left alone."""
     for op, range_high, approx_high in (
         (MathOperation.Exp, 80.0, 16.0),
         (MathOperation.Exp2, 100.0, 23.0),
-        (MathOperation.ExpWithBase, 160.0, 32.0),
+        (
+            MathOperation.ExpWithBase,
+            80.0 / EXP_WITH_BASE_SCALE,
+            16.0 / EXP_WITH_BASE_SCALE,
+        ),
     ):
         assert for_op(op, F32).spec_A.high == range_high
         assert for_op(op, F32, approx_mode=NO).spec_A.high == range_high
@@ -308,7 +313,7 @@ def test_exp_family_ceiling_follows_the_approximation_mode():
     for mode in (NO, YES):
         exp = for_op(MathOperation.Exp, F32, approx_mode=mode).spec_A.high
         base = for_op(MathOperation.ExpWithBase, F32, approx_mode=mode).spec_A.high
-        assert base == 2 * exp
+        assert base == exp / EXP_WITH_BASE_SCALE
     for fmt, high in (
         (DataFormat.MxFp8P, 5.0),
         (DataFormat.Fp8_e4m3, 5.0),

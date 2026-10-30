@@ -1732,10 +1732,8 @@ def test_exponential_accurate_unclamped_large_negative():
 
     num_elements = input_dimensions[0] * input_dimensions[1]
     src_A = torch.rand(num_elements, dtype=torch.bfloat16) * 10.0 - 5.0
-    # exp(x) of every one of these is below the smallest bf16 subnormal, so the only correct
-    # bf16 output is 0.0. One SFPLOAD covers 64 consecutive elements of one column parity and
-    # the iterations alternate parities, so an (even, odd) sentinel pair every
-    # SFPLOAD_WINDOW // len(large_negative) elements puts every value in every iteration.
+    # exp(x) of each is below the smallest bf16 subnormal, so the only correct output is 0.0.
+    # An (even, odd) pair per stride puts every value in every SFPLOAD window of each parity.
     large_negative = [-10000.0, -1000.0, -226.0, -200.0, -176.0, -150.0, -120.0, -100.0]
     SFPLOAD_WINDOW = 64
     sentinel_stride = SFPLOAD_WINDOW // len(large_negative)
@@ -1767,9 +1765,8 @@ def test_exponential_accurate_unclamped_large_negative():
     ), f"Test failed: {(~is_close).sum()} elements outside tolerance (atol={atol}, rtol={rtol})"
 
 
-# ExpWithBase outside the nightly sweep: the only op that drives calculate_exponential with
-# SCALE_EN, so this is what builds the runtime-scale path on the PR gate; the scale's mantissa
-# bits (EXP_WITH_BASE_SCALE) catch a kernel that drops the low bits of the scale.
+# The only non-nightly ExpWithBase case, so the PR gate builds the runtime-scale path; the
+# scale's mantissa bits (EXP_WITH_BASE_SCALE) catch a kernel that drops its low bits.
 @pytest.mark.parametrize(
     "formats",
     [

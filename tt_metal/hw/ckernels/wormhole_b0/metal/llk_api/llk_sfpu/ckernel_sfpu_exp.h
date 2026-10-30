@@ -366,9 +366,8 @@ inline void _sfpu_exp_21f_bf16_tti_(const std::uint16_t exp_base_scale_factor) {
     // xlog2 = val * (1/ln2) + 127.0f
     TTI_SFPMAD(p_sfpu::LREG0, p_sfpu::LREG12, p_sfpu::LREG3, p_sfpu::LREG0, 0);
 
-    // Both clamps are unconditional: the integer trick below (SFPEXEXP / SFPEXMAN / SFPSHFT)
-    // is only meaningful for xlog2 >= 0 and gives an arbitrary positive value otherwise, so
-    // CLAMP_NEGATIVE cannot disable the lower clamp (it governs the approximate path only).
+    // Both clamps are unconditional: the integer trick below (SFPEXEXP / SFPEXMAN / SFPSHFT) needs
+    // xlog2 >= 0, so CLAMP_NEGATIVE (the approximate path's flag) cannot disable the lower clamp.
     // Lower clamp: xlog2 <- max(xlog2, 0), with 0.0 materialized in LREG1 since SFPSWAP cannot
     // read LCONST_0. VEC_MIN_MAX leaves the max in VC (LREG0) and the min in VD (LREG1).
     TTI_SFPMOV(0, p_sfpu::LCONST_0, p_sfpu::LREG1, 0);

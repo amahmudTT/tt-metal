@@ -1069,8 +1069,8 @@ _UNMEASURABLE_CELLS_ACKNOWLEDGED = {
         ApproximationMode.Yes,
         None,
     ): (
-        "the same shortfall through the 0.5 scale: approximate exp(0.5 x) answers "
-        "64256..64640 for x in 22.19..22.22, where the answer is past 65504"
+        "the same shortfall through the scale: approximate exp(EXP_WITH_BASE_SCALE x) "
+        "answers 64384..64768 for x in 16.05..16.06, where the answer is past 65504"
     ),
     (
         MathOperation.ExpWithBase,
@@ -1078,19 +1078,7 @@ _UNMEASURABLE_CELLS_ACKNOWLEDGED = {
         DataFormat.Float16,
         ApproximationMode.Yes,
         None,
-    ): (
-        "the same shortfall through the 0.5 scale from a strided Float32 input, one lane"
-    ),
-    (
-        MathOperation.ExpWithBase,
-        DataFormat.Float16,
-        DataFormat.Float32,
-        ApproximationMode.Yes,
-        DestAccumulation.Yes,
-    ): (
-        "the same shortfall at fp32's overflow edge through the 0.5 scale: exp(0.5 * "
-        "177.5) is past FLT_MAX, and the approximation answers 3.396e38, one lane"
-    ),
+    ): "the same shortfall through the scale from a strided Float32 input, one lane",
     # -- kernel behaviour over a wide band of the format -----------------------------
     # Each names the issue that tracks it, or says why it is no defect, so retiring the
     # entry is tied to something: the stale check below fails once no row needs it.

@@ -121,9 +121,8 @@
 namespace ckernel::sfpu
 {
 
-// exp_with_base's scale, bf16 0x3F31 = 0.69140625 (base b = e^0.69140625), mirrored as
-// EXP_WITH_BASE_SCALE in sfpu_dispatch_constants.py. Its mantissa bits are set, so a kernel
-// that drops the low bits of the scale is caught; the fp32 form is for exp_init's constants.
+// exp_with_base's scale, bf16 0x3F31 = 0.69140625, mirrored as EXP_WITH_BASE_SCALE in
+// sfpu_dispatch_constants.py; its mantissa bits catch a kernel that drops the scale's low bits.
 constexpr std::uint32_t EXP_WITH_BASE_SCALE_BF16 = 0x3F31u;
 constexpr std::uint32_t EXP_WITH_BASE_SCALE_FP32 = EXP_WITH_BASE_SCALE_BF16 << 16;
 

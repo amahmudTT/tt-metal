@@ -23,6 +23,7 @@ from .llk_params import ApproximationMode, DestAccumulation, MathOperation
 from .sfpu_dispatch_constants import (
     CLAMP_MAX,
     CLAMP_MIN,
+    EXP_WITH_BASE_SCALE,
     HARDSHRINK_LAMBDA,
     INT_MAXMIN_SCALAR,
     RELU_MAX_THRESHOLD,
@@ -156,10 +157,12 @@ _OP_DOMAIN_REGISTRY: dict[
     MathOperation.Heaviside: _u(-5.0, 5.0),
     # exp: -100 crosses the kernel's negative clamp near -88.5; 80 stays under the fp32
     # overflow at 88.7. exp2 is 2**x, not range-bound on the positive side; exp_with_base
-    # computes exp(0.5 x), so its positive side is double exp's.
+    # computes exp(EXP_WITH_BASE_SCALE x), so its positive bound is exp's over the scale.
     MathOperation.Exp: _tiered((-5.0, 5.0), (-10.0, 10.0), (-100.0, 80.0)),
     MathOperation.Exp2: _tiered((-7.0, 7.0), (-14.0, 14.0), (-100.0, 100.0)),
-    MathOperation.ExpWithBase: _tiered((-5.0, 5.0), (-10.0, 10.0), (-100.0, 160.0)),
+    MathOperation.ExpWithBase: _tiered(
+        (-5.0, 5.0), (-10.0, 10.0), (-100.0, 80.0 / EXP_WITH_BASE_SCALE)
+    ),
     MathOperation.Fill: _u(0.0, 1.0),  # the input is ignored
     # gelu family: most inputs near 0, some in the saturating tails.
     MathOperation.Gelu: _g(0.0, 3.0, low=-5.0, high=5.0),
@@ -297,11 +300,11 @@ _OP_DOMAIN_REGISTRY: dict[
 
 # The approximating exp family's accuracy ceiling, applied on top of the range bound at
 # ApproximationMode.Yes: exp overshoots past 16; exp2 is exp(x ln 2), so 16 / ln 2 ~ 23;
-# exp_with_base computes exp(0.5 x), so double.
+# exp_with_base computes exp(EXP_WITH_BASE_SCALE x), so 16 over the scale.
 _APPROX_ACCURACY_MAX: dict[MathOperation, float] = {
     MathOperation.Exp: 16.0,
     MathOperation.Exp2: 23.0,
-    MathOperation.ExpWithBase: 32.0,
+    MathOperation.ExpWithBase: 16.0 / EXP_WITH_BASE_SCALE,
 }
 
 

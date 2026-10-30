@@ -456,20 +456,20 @@ Exp2:
 - {input: Float32, output: Float32, dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 65536}]}
 - {input: Float32, output: Float32, dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 1}]}
 ExpWithBase:
-- {input: Float16, output: Float16, approx: 'No', dest: 'No', domains: [{low: -.inf, high: 32.0, ulp: 7}, {low: 32.0, high: .inf}]}
-- {input: Float16, output: Float16, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: 32.0, ulp: 1}, {low: 32.0, high: .inf}]}
-- {input: Float16, output: Float16, approx: 'Yes', dest: 'No', metric: TOLERANCE, measured: 46, nonfinite: 4, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=22.1875: inf -> 64256; x=22.2031: inf -> 64640)'}
-- {input: Float16, output: Float16, approx: 'Yes', dest: 'Yes', metric: TOLERANCE, measured: 46, nonfinite: 4, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=22.1875: inf -> 64256; x=22.2031: inf -> 64640)'}
-- {input: Float16, output: Float16_b, approx: 'No', dest: 'No', domains: [{low: -.inf, high: 32.0, ulp: 1}, {low: 32.0, high: .inf}]}
-- {input: Float16, output: Float16_b, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 1}]}
-- {input: Float16, output: Float16_b, approx: 'Yes', dest: 'No', near_zero_atol: 6.246566772460938e-05, domains: [{low: -.inf, high: 32.0, ulp: 6}, {low: 32.0, high: .inf}]}
+- {input: Float16, output: Float16, approx: 'No', dest: 'No', domains: [{low: -.inf, high: 16.0, ulp: 7}, {low: 16.0, high: .inf}]}
+- {input: Float16, output: Float16, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: 16.0, ulp: 1}, {low: 16.0, high: .inf}]}
+- {input: Float16, output: Float16, approx: 'Yes', dest: 'No', metric: TOLERANCE, measured: 46, nonfinite: 3, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=16.0469: inf -> 64384; x=16.0625: inf -> 64768)'}
+- {input: Float16, output: Float16, approx: 'Yes', dest: 'Yes', metric: TOLERANCE, measured: 46, nonfinite: 3, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=16.0469: inf -> 64384; x=16.0625: inf -> 64768)'}
+- {input: Float16, output: Float16_b, approx: 'No', dest: 'No', domains: [{low: -.inf, high: 16.0, ulp: 1}, {low: 16.0, high: .inf}]}
+- {input: Float16, output: Float16_b, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 0}]}
+- {input: Float16, output: Float16_b, approx: 'Yes', dest: 'No', near_zero_atol: 6.246566772460938e-05, domains: [{low: -.inf, high: 16.0, ulp: 6}, {low: 16.0, high: .inf}]}
 - {input: Float16, output: Float16_b, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 6}]}
-- {input: Float16, output: Float32, approx: 'No', dest: 'No', domains: [{low: -.inf, high: 32.0, ulp: 57344}, {low: 32.0, high: .inf}]}
+- {input: Float16, output: Float32, approx: 'No', dest: 'No', domains: [{low: -.inf, high: 16.0, ulp: 57344}, {low: 16.0, high: .inf}]}
 - {input: Float16, output: Float32, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 1}]}
-- {input: Float16, output: Float32, approx: 'Yes', dest: 'No', near_zero_atol: 6.252527236938477e-05, domains: [{low: -.inf, high: 32.0, ulp: 376832}, {low: 32.0, high: .inf}]}
-- {input: Float16, output: Float32, approx: 'Yes', dest: 'Yes', metric: TOLERANCE, measured: 378710, nonfinite: 1, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=177.5: inf -> 3.39618e+38)'}
-- {input: Float16_b, output: Float16, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: 32.0, ulp: 1}, {low: 32.0, high: .inf}]}
-- {input: Float16_b, output: Float16, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 32.0, ulp: 46}, {low: 32.0, high: .inf}]}
+- {input: Float16, output: Float32, approx: 'Yes', dest: 'No', near_zero_atol: 6.252527236938477e-05, domains: [{low: -.inf, high: 16.0, ulp: 376832}, {low: 16.0, high: .inf}]}
+- {input: Float16, output: Float32, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 128.0, ulp: 378708}, {low: 128.0, high: .inf}]}
+- {input: Float16_b, output: Float16, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: 16.0, ulp: 1}, {low: 16.0, high: .inf}]}
+- {input: Float16_b, output: Float16, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 16.0, ulp: 46}, {low: 16.0, high: .inf}]}
 - {input: Float16_b, output: Float16_b, approx: 'No', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 1}]}
 - {input: Float16_b, output: Float16_b, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 0}]}
 - {input: Float16_b, output: Float16_b, approx: 'Yes', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 6}]}
@@ -477,19 +477,19 @@ ExpWithBase:
 - {input: Float16_b, output: Float32, approx: 'No', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 65536}]}
 - {input: Float16_b, output: Float32, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 1}]}
 - {input: Float16_b, output: Float32, approx: 'Yes', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 393216}]}
-- {input: Float16_b, output: Float32, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 256.0, ulp: 378694}, {low: 256.0, high: .inf}]}
-- {input: Float32, output: Float16, approx: 'No', dest: 'No', domains: [{low: -.inf, high: -65536.0}, {low: -65536.0, high: -6.103515625e-05, ulp: 7}, {low: -6.103515625e-05, high: 6.103515625e-05}, {low: 6.103515625e-05, high: 32.0, ulp: 7}, {low: 32.0, high: .inf}]}
-- {input: Float32, output: Float16, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: 32.0, ulp: 1}, {low: 32.0, high: .inf}]}
-- {input: Float32, output: Float16, approx: 'Yes', dest: 'No', metric: TOLERANCE, measured: 46, nonfinite: 1, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=22.2185: inf -> 64640)'}
-- {input: Float32, output: Float16, approx: 'Yes', dest: 'Yes', metric: TOLERANCE, measured: 46, nonfinite: 1, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=22.2185: inf -> 65024)'}
+- {input: Float16_b, output: Float32, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 128.0, ulp: 378708}, {low: 128.0, high: .inf}]}
+- {input: Float32, output: Float16, approx: 'No', dest: 'No', domains: [{low: -.inf, high: -65536.0}, {low: -65536.0, high: -6.103515625e-05, ulp: 7}, {low: -6.103515625e-05, high: 6.103515625e-05}, {low: 6.103515625e-05, high: 16.0, ulp: 7}, {low: 16.0, high: .inf}]}
+- {input: Float32, output: Float16, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: 16.0, ulp: 1}, {low: 16.0, high: .inf}]}
+- {input: Float32, output: Float16, approx: 'Yes', dest: 'No', metric: TOLERANCE, measured: 46, nonfinite: 1, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=16.0581: inf -> 64384)'}
+- {input: Float32, output: Float16, approx: 'Yes', dest: 'Yes', metric: TOLERANCE, measured: 46, nonfinite: 1, note: 'not measurable: lanes disagreeing with the golden about being finite (golden -> result: x=16.0581: inf -> 64640)'}
 - {input: Float32, output: Float16_b, approx: 'No', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 1}]}
 - {input: Float32, output: Float16_b, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 0}]}
 - {input: Float32, output: Float16_b, approx: 'Yes', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 6}]}
 - {input: Float32, output: Float16_b, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 6}]}
 - {input: Float32, output: Float32, approx: 'No', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 65536}]}
-- {input: Float32, output: Float32, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 1}]}
+- {input: Float32, output: Float32, approx: 'No', dest: 'Yes', domains: [{low: -.inf, high: .inf, ulp: 62}]}
 - {input: Float32, output: Float32, approx: 'Yes', dest: 'No', domains: [{low: -.inf, high: .inf, ulp: 393216}]}
-- {input: Float32, output: Float32, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 256.0, ulp: 378632}, {low: 256.0, high: .inf}]}
+- {input: Float32, output: Float32, approx: 'Yes', dest: 'Yes', domains: [{low: -.inf, high: 128.0, ulp: 378704}, {low: 128.0, high: .inf}]}
 Expm1:
 - {input: Float16, output: Float16, dest: 'No', domains: [{low: -.inf, high: 16.0, ulp: 4}, {low: 16.0, high: .inf}]}
 - {input: Float16, output: Float16, dest: 'Yes', domains: [{low: -.inf, high: 16.0, ulp: 1}, {low: 16.0, high: .inf}]}
